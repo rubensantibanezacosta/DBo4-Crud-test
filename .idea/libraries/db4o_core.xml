@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="db4o-core">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../BallsDB4O/xmlbackend/src/main/resources/db4o-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../BallsDB4O/xmlbackend/src/main/resources/db4o-nqopt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
