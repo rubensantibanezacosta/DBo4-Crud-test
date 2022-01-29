@@ -1,5 +1,6 @@
 package com.company.models;
 
+
 import java.io.Serializable;
 
 
@@ -8,6 +9,7 @@ public class Ball implements Serializable {
     public float size;
     public String color;
     public float weight;
+
 
     public Ball(int id, float size, String color, float weight) {
         this.id = id;
@@ -62,6 +64,6 @@ public class Ball implements Serializable {
                 ", size=" + size +
                 ", color='" + color + '\'' +
                 ", weight=" + weight +
-                '}';
+                '}'+'\n';
     }
 }

@@ -1,21 +1,22 @@
 package com.company.models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.company.connect.DataConnection;
+import com.db4o.ObjectContainer;
+
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
 public class BallsArray {
+    ObjectContainer db = DataConnection.getInstance();
     List<Ball> balls = new ArrayList<>();
 
     public BallsArray() {
     }
 
     public List<Ball> getBalls() {
+        this.balls=db.query(Ball.class);
         return balls;
     }
 
@@ -23,34 +24,53 @@ public class BallsArray {
         this.balls = balls;
     }
 
-    public void addBall(Ball ball) {
-        this.balls.add(ball);
+    public String addBall(Ball ball) {
+        if(!(db.queryByExample(ball).size()>0)){
+            db.store(ball);
+            return "Guardado con éxito";
+        }else{
+            return "Ya existe esa pelota";
+        }
     }
+
+    public int updateBall(Ball ball) {
+        this.balls=db.queryByExample(ball);
+        if(balls.size()>0){
+            db.delete(ball);
+            db.commit();
+            db.store(ball);
+            db.commit();
+            return 1;
+        }
+
+        return 0;
+    }
+
     public int getLenght() {
         return this.balls.size();
     }
 
 
+    public Ball getBallbyId(int i) {
+        return (Ball) db.queryByExample(new Ball(i)).get(0);
+    }
 
+    public int deleteBall(Ball ball){
+        if(db.queryByExample(ball).size()>0){
+            int quantity=db.queryByExample(ball).size();
+            db.delete(ball);
+            db.commit();
+            return quantity;
 
-    public void sort() {
-        Collections.sort(balls, new Sortbyroll());
+        }
+        return  0;
     }
 
 
-    public Ball getBall(int i) {
-        return balls.get(i);
-    }
-    public void unshift() {
-        balls.remove(0);
-    }
-}
-class Sortbyroll implements Comparator<Ball>
-{
-    // Used for sorting in ascending order of
-    // roll number
-    public int compare(Ball a, Ball b)
-    {
-        return a.id - b.id;
+    @Override
+    public String toString() {
+        return "BallsArray{" +
+                "balls=" + balls +
+                '}';
     }
 }
