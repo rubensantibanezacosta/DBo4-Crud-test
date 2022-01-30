@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="db4o-core">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Descargas/db4o/db4o-8.0.236.16058-core-java5.jar!/" />
-      <root url="jar://$USER_HOME$/Descargas/db4o/db4o-8.0.236.16058-nqopt-java5.jar!/" />
+      <root url="jar://$USER_HOME$/Descargas/db4o-8.0.236.16058-core-java5.jar!/" />
+      <root url="jar://$USER_HOME$/Descargas/db4o-8.0.236.16058-nqopt-java5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

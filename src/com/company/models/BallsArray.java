@@ -4,13 +4,14 @@ import com.company.connect.DataConnection;
 import com.db4o.ObjectContainer;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BallsArray {
     ObjectContainer db = DataConnection.getInstance();
-    List<Ball> balls = new ArrayList<>();
+    public List<Ball> balls = new ArrayList<>();
 
     public BallsArray() {
     }
@@ -20,17 +21,24 @@ public class BallsArray {
         return balls;
     }
 
-    public void setBalls(List<Ball> balls) {
-        this.balls = balls;
-    }
+
 
     public String addBall(Ball ball) {
-        if(!(db.queryByExample(ball).size()>0)){
+
+        if((db.queryByExample(new Ball(ball.getId())).size()>0)){
+            List<Ball> existingBalls=db.queryByExample(new Ball(ball.getId()));
+            db.delete(existingBalls.get(0));
             db.store(ball);
             return "Guardado con éxito";
         }else{
+
+            db.store(ball);
             return "Ya existe esa pelota";
         }
+    }
+
+    public void setBalls(List<Ball> balls) {
+        this.balls = balls;
     }
 
     public int updateBall(Ball ball) {
@@ -55,16 +63,19 @@ public class BallsArray {
         return (Ball) db.queryByExample(new Ball(i)).get(0);
     }
 
-    public int deleteBall(Ball ball){
-        if(db.queryByExample(ball).size()>0){
-            int quantity=db.queryByExample(ball).size();
-            db.delete(ball);
-            db.commit();
-            return quantity;
+    public String deleteBall(int id){
+        if((db.queryByExample(new Ball(id)).size()>0)){
+            List<Ball> existingBalls=db.queryByExample(new Ball(id));
+            db.delete(existingBalls.get(0));
+            return "Guardado con éxito";
+        }else{
+
+
+            return "Ya existe esa pelota";
+        }
 
         }
-        return  0;
-    }
+
 
 
     @Override

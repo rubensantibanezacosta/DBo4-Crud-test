@@ -24,7 +24,6 @@ public class DataConnection {
 
     public void performConnection() {
         EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
-
         db = Db4oEmbedded.openFile(config, PATH);
 
     }
